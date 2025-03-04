@@ -2,5 +2,14 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    # Write your code here
-    pass
+    storage = {}
+    def wrapper(*args) -> None:
+        if args in storage:
+            print("Getting from cache")
+            return storage[args]
+        else:
+            result = func(*args)
+            storage[args] = result
+            print("Calculating new result")
+            return storage[args]
+    return wrapper
